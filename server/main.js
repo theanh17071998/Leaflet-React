@@ -1,25 +1,45 @@
 import { Meteor } from "meteor/meteor";
 import { HTTP } from "meteor/http";
+import {DataCollection} from "../imports/api/links"
 
-Meteor.startup(() => {
-  Meteor.call("getData")
-});
+if (Meteor.isServer) {
+  Meteor.methods({
+    'getData': getData,
+    // 'getData2': getData2
+  });
+}
 
-// Meteor.methods({
-//   getData: function () {
-//     HTTP.call(
-//       "POST",
-//       "https://pamair.org/pamenviad/no/ref/122",
-//       { "method": "get" },
-//       function (error, result) {
-//         if (error) {
-//           console.log(error);
-//         } else {
-//           console.log(result);
-//         }
-//       }
-//     );
-//   },
-// });
+const insertData = data => DataCollection.insert({ data });
 
-Meteor.call('booking', 1)
+function getData() {
+  HTTP.call(
+    "POST",
+    "https://pamair.org/pamenviad/no/ref/122",
+    {
+      data: { method: "get" },
+    },
+    function(error, result) {
+      if(error){
+        console.log(error);
+      } else {
+        insertData(result)
+      }
+    }
+  );
+}
+function getData2() {
+  HTTP.call(
+    "POST",
+    "https://pamair.org/pamenviad/no/ref/13",
+    {
+      data: { method: "get" },
+    },
+    function(error, result) {
+      if(error){
+        console.log(error);
+      } else {
+        insertData(result)
+      }
+    }
+  );
+}

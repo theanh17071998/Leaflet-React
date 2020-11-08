@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Map,
   TileLayer,
@@ -7,23 +7,17 @@ import {
   Tooltip,
 } from "react-leaflet";
 import InfoDetail from "./infoDetail";
-import { Meteor } from "meteor/meteor";
+import {DataCollection} from "../api/links"
+import { useTracker } from 'meteor/react-meteor-data';
+import {Meteor} from 'meteor/meteor'
 
 
-// const DEFAULT_LATITUDE = 21.0245;
-// const DEFAULT_LONGITUDE = 105.84117;
-const DEFAULT_LATITUDE = 51.505;
-const DEFAULT_LONGITUDE = -0.09;
+const DEFAULT_LATITUDE = 20.98369839999999;
+const DEFAULT_LONGITUDE = 105.86362570000006;
 
 export const App = () => {
-// on the client 
-//   Meteor.call('getData', function (error, result) {
-//     if (error) {
-//        console.log(error);
-//     } else {
-//        console.log('getData result is: ' + result);
-//     }
-//  });
+  const data = useTracker(() => DataCollection.find({}).fetch());
+  console.log(data);
   return (
     <div>
       <Map
@@ -35,11 +29,11 @@ export const App = () => {
           attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[51.51, -0.09]}>
+        <Marker position={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]}>
           <Popup>
             <InfoDetail/>
           </Popup>
-          <Tooltip>
+          <Tooltip >
             <div>
               <span>You here</span>
             </div>
