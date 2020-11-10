@@ -2,6 +2,13 @@ import { Meteor } from "meteor/meteor";
 import { HTTP } from "meteor/http";
 import {DataCollection} from "../imports/api/links"
 
+
+Meteor.startup(() => {
+  if(Meteor.isServer) {
+    DataCollection.remove({})
+  }
+})
+
 if (Meteor.isServer) {
   Meteor.methods({
     'getData': getData,
@@ -22,6 +29,7 @@ function getData() {
       if(error){
         console.log(error);
       } else {
+        DataCollection.remove({})
         insertData(result)
       }
     }
