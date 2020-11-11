@@ -26,8 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function InfoDetail() {
+export default function InfoDetail(props) {
   const classes = useStyles();
+  const {info, city, city1} = props;
+  function(number) {
+    return 
+  }
   return (
     <div>
       <Box>
@@ -47,8 +51,8 @@ export default function InfoDetail() {
                   padding: "8px 4px"
                 }}
               >
-                <div>Kim mã</div>
-                <div>Ba Đình - Hà Nội (21.0317, 105.8241)</div>
+                <div>{info.name}</div>
+              <div>{city.name} - {city1.name} ({info.lat} -  {info.lng})</div>
               </div>
               <div
                 style={{
@@ -66,7 +70,7 @@ export default function InfoDetail() {
                 >
                   <div>VN AQI</div>
                   <div>
-                    <span>60</span>
+                    <span>{info.aqi_vn_1h}</span>
                   </div>
                 </div>
                 <div>
@@ -89,7 +93,7 @@ export default function InfoDetail() {
               >
                 <div>
                   <div>
-                    <span>24.9</span>
+              <span>{info.children[0]?.min_last_24h_value}</span>
                   </div>
                   <div>
                     <span>PM 2.5 (µg/m3)</span>
@@ -113,7 +117,7 @@ export default function InfoDetail() {
                 </div>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <span>Cập nhật: 29/10/2020 15:00</span>
+              <span>Cập nhật:{info.children[0]?.aqi_us_1h_longtime}</span>
               </div>
             </div>
           </CardContent>
